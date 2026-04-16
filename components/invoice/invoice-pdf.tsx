@@ -13,6 +13,7 @@ import {
 import { InvoicePreview } from './invoice-preview'
 import { generatePdf, generateImage } from '@/lib/pdf-generator'
 import { useLanguage } from '@/hooks/use-language'
+import { toast } from '@/hooks/use-toast'
 import type { Invoice } from '@/types/invoice'
 
 interface InvoicePdfProps {
@@ -33,6 +34,13 @@ export function InvoicePdf({ invoice, open, onOpenChange }: InvoicePdfProps) {
     setLoading('pdf')
     try {
       await generatePdf(previewRef.current, `${baseName}.pdf`)
+      toast({ title: t('toast.pdfDownloaded') })
+    } catch (e) {
+      toast({
+        variant: 'destructive',
+        title: t('toast.downloadFailed'),
+        description: e instanceof Error ? e.message : undefined,
+      })
     } finally {
       setLoading(null)
     }
@@ -43,6 +51,13 @@ export function InvoicePdf({ invoice, open, onOpenChange }: InvoicePdfProps) {
     setLoading('image')
     try {
       await generateImage(previewRef.current, `${baseName}.png`)
+      toast({ title: t('toast.imageDownloaded') })
+    } catch (e) {
+      toast({
+        variant: 'destructive',
+        title: t('toast.downloadFailed'),
+        description: e instanceof Error ? e.message : undefined,
+      })
     } finally {
       setLoading(null)
     }

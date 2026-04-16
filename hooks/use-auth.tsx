@@ -13,6 +13,8 @@ import {
   resetPassword,
 } from '@/services/firebase/auth'
 import { getUserDocument } from '@/services/firebase/firestore'
+import { toast } from '@/hooks/use-toast'
+import { useLanguage } from '@/hooks/use-language'
 import type { User, AuthState } from '@/types/user'
 
 interface AuthContextType extends AuthState {
@@ -30,11 +32,24 @@ interface AuthContextType extends AuthState {
 const AuthContext = createContext<AuthContextType | null>(null)
 
 export function AuthProvider({ children }: { children: ReactNode }) {
+  const { t } = useLanguage()
   const [state, setState] = useState<AuthState>({
     user: null,
     loading: true,
     error: null,
   })
+
+  const authErrorToast = useCallback(
+    (titleKey: string, error: unknown) => {
+      const message = error instanceof Error ? error.message : String(error)
+      toast({
+        variant: 'destructive',
+        title: t(titleKey),
+        description: message,
+      })
+    },
+    [t],
+  )
 
   const refreshUser = useCallback(async () => {
     if (state.user?.uid) {
@@ -53,6 +68,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           setState({ user: userData, loading: false, error: null })
         } catch {
           setState({ user: null, loading: false, error: 'Failed to load user data' })
+          toast({
+            variant: 'destructive',
+            title: t('toast.sessionLoadFailed'),
+            description: t('errors.serverError'),
+          })
         }
       } else {
         setState({ user: null, loading: false, error: null })
@@ -60,119 +80,143 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     })
 
     return () => unsubscribe()
-  }, [])
+  }, [t])
 
   const handleSignInWithGoogle = useCallback(async () => {
     setState((prev) => ({ ...prev, loading: true, error: null }))
     try {
       const user = await signInWithGoogle()
       setState({ user, loading: false, error: null })
+      toast({ title: t('toast.signedIn') })
     } catch (error) {
+      const message = error instanceof Error ? error.message : 'Sign in failed'
       setState((prev) => ({
         ...prev,
         loading: false,
-        error: error instanceof Error ? error.message : 'Sign in failed',
+        error: message,
       }))
+      authErrorToast('toast.signInFailed', error)
     }
-  }, [])
+  }, [t, authErrorToast])
 
   const handleSignInWithFacebook = useCallback(async () => {
     setState((prev) => ({ ...prev, loading: true, error: null }))
     try {
       const user = await signInWithFacebook()
       setState({ user, loading: false, error: null })
+      toast({ title: t('toast.signedIn') })
     } catch (error) {
+      const message = error instanceof Error ? error.message : 'Sign in failed'
       setState((prev) => ({
         ...prev,
         loading: false,
-        error: error instanceof Error ? error.message : 'Sign in failed',
+        error: message,
       }))
+      authErrorToast('toast.signInFailed', error)
     }
-  }, [])
+  }, [t, authErrorToast])
 
   const handleSignInWithEmail = useCallback(async (email: string, password: string) => {
     setState((prev) => ({ ...prev, loading: true, error: null }))
     try {
       const user = await signInWithEmail(email, password)
       setState({ user, loading: false, error: null })
+      toast({ title: t('toast.signedIn') })
     } catch (error) {
+      const message = error instanceof Error ? error.message : 'Sign in failed'
       setState((prev) => ({
         ...prev,
         loading: false,
-        error: error instanceof Error ? error.message : 'Sign in failed',
+        error: message,
       }))
+      authErrorToast('toast.signInFailed', error)
     }
-  }, [])
+  }, [t, authErrorToast])
 
   const handleSignUpWithEmail = useCallback(async (email: string, password: string) => {
     setState((prev) => ({ ...prev, loading: true, error: null }))
     try {
       const user = await signUpWithEmail(email, password)
       setState({ user, loading: false, error: null })
+      toast({ title: t('toast.accountCreated') })
     } catch (error) {
+      const message = error instanceof Error ? error.message : 'Sign up failed'
       setState((prev) => ({
         ...prev,
         loading: false,
-        error: error instanceof Error ? error.message : 'Sign up failed',
+        error: message,
       }))
+      authErrorToast('toast.signUpFailed', error)
     }
-  }, [])
+  }, [t, authErrorToast])
 
   const handleSendPhoneOtp = useCallback(async (phone: string, containerId: string) => {
     setState((prev) => ({ ...prev, loading: true, error: null }))
     try {
       await sendPhoneOtp(phone, containerId)
       setState((prev) => ({ ...prev, loading: false }))
+      toast({ title: t('toast.codeSent') })
     } catch (error) {
+      const message = error instanceof Error ? error.message : 'Failed to send OTP'
       setState((prev) => ({
         ...prev,
         loading: false,
-        error: error instanceof Error ? error.message : 'Failed to send OTP',
+        error: message,
       }))
+      authErrorToast('toast.codeSendFailed', error)
     }
-  }, [])
+  }, [t, authErrorToast])
 
   const handleVerifyPhoneOtp = useCallback(async (code: string) => {
     setState((prev) => ({ ...prev, loading: true, error: null }))
     try {
       const user = await verifyPhoneOtp(code)
       setState({ user, loading: false, error: null })
+      toast({ title: t('toast.signedIn') })
     } catch (error) {
+      const message = error instanceof Error ? error.message : 'Invalid OTP'
       setState((prev) => ({
         ...prev,
         loading: false,
-        error: error instanceof Error ? error.message : 'Invalid OTP',
+        error: message,
       }))
+      authErrorToast('toast.verifyFailed', error)
     }
-  }, [])
+  }, [t, authErrorToast])
 
   const handleSignOut = useCallback(async () => {
     setState((prev) => ({ ...prev, loading: true, error: null }))
     try {
       await signOut()
       setState({ user: null, loading: false, error: null })
+      toast({ title: t('toast.signedOut') })
     } catch (error) {
+      const message = error instanceof Error ? error.message : 'Sign out failed'
       setState((prev) => ({
         ...prev,
         loading: false,
-        error: error instanceof Error ? error.message : 'Sign out failed',
+        error: message,
       }))
+      authErrorToast('toast.signOutFailed', error)
     }
-  }, [])
+  }, [t, authErrorToast])
 
   const handleResetPassword = useCallback(async (email: string) => {
     setState((prev) => ({ ...prev, loading: true, error: null }))
     try {
       await resetPassword(email)
       setState((prev) => ({ ...prev, loading: false }))
+      toast({ title: t('toast.resetEmailSent') })
     } catch (error) {
+      const message = error instanceof Error ? error.message : 'Password reset failed'
       setState((prev) => ({
         ...prev,
         loading: false,
-        error: error instanceof Error ? error.message : 'Password reset failed',
+        error: message,
       }))
+      authErrorToast('toast.resetPasswordFailed', error)
     }
-  }, [])
+  }, [t, authErrorToast])
 
   const value: AuthContextType = {
     ...state,

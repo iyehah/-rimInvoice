@@ -1,5 +1,5 @@
 'use client'
-
+import Image from 'next/image'
 import { FileText } from 'lucide-react'
 import { LoginForm } from '@/components/auth/login-form'
 import { AppSettingsMenu } from '@/components/layout/app-settings-menu'
@@ -9,12 +9,10 @@ export default function LoginPage() {
   const { t } = useLanguage()
 
   return (
-    <div className="flex min-h-screen flex-col bg-gradient-to-b from-muted/40 via-background to-background">
+    <div className="flex min-h-screen flex-col bg-linear-to-b from-muted/40 via-background to-background">
       <header className="flex items-center justify-between border-b border-border/60 px-4 py-3 backdrop-blur-sm sm:px-6">
         <div className="flex items-center gap-2 font-semibold">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-primary-foreground shadow-sm">
-            <FileText className="h-4 w-4" />
-          </div>
+          <Image width={20} height={20} src="/logo.svg" alt="Logo" draggable={false} />
           <span>{t('common.appName')}</span>
         </div>
         <AppSettingsMenu />

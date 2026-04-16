@@ -10,7 +10,7 @@ import { useLanguage } from '@/hooks/use-language'
 
 export function LoginForm() {
   const router = useRouter()
-  const { signInWithGoogle, loading, error } = useAuth()
+  const { signInWithGoogle, loading } = useAuth()
   const { t } = useLanguage()
 
   const handleGoogleSignIn = async () => {
@@ -50,7 +50,6 @@ export function LoginForm() {
           </Badge>
         </Button>
 
-        {error ? <p className="text-center text-sm text-destructive">{error}</p> : null}
       </CardContent>
     </Card>
   )

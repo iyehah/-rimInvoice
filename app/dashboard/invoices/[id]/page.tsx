@@ -21,6 +21,7 @@ import {
 import { InvoicePreview } from '@/components/invoice/invoice-preview'
 import { useInvoice, useInvoiceActions } from '@/hooks/use-invoice'
 import { useLanguage } from '@/hooks/use-language'
+import { toast } from '@/hooks/use-toast'
 import { Spinner } from '@/components/ui/spinner'
 
 // Dynamically import InvoicePdf to avoid SSR issues with jsPDF
@@ -43,7 +44,10 @@ export default function InvoiceDetailPage() {
   const handleDelete = async () => {
     const success = await deleteInvoice(invoiceId)
     if (success) {
+      toast({ title: t('toast.invoiceDeleted') })
       router.push('/dashboard/invoices')
+    } else {
+      toast({ variant: 'destructive', title: t('toast.invoiceDeleteFailed') })
     }
   }
 
