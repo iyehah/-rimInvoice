@@ -33,7 +33,7 @@ Web app for creating and managing invoices with support for Mauritanian context 
 
 ```bash
 git clone https://github.com/iyehah/rimInvoice.git
-cd riminvoice
+cd rimInvoice
 npm install
 ```
 
@@ -120,9 +120,11 @@ Export is triggered from the invoice preview dialog (`components/invoice/invoice
 
 ## Contributing
 
+Issues and pull requests are welcome on [GitHub](https://github.com/iyehah/rimInvoice).
+
 1. Follow existing patterns (client components where Firebase or `window` is used).
 2. Add or update strings in **all** files under `locales/` when introducing new user-facing copy (see `hooks/use-language.tsx` for supported languages).
 
 ## License
 
-Private project (`"private": true` in `package.json`). Add a `LICENSE` file if you intend to open-source.
+[MIT](LICENSE).
