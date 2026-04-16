@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { FileText } from 'lucide-react'
 import { LoginForm } from '@/components/auth/login-form'
 import { AppSettingsMenu } from '@/components/layout/app-settings-menu'
+import { RepoDevLinks } from '@/components/layout/repo-dev-links'
 import { useLanguage } from '@/hooks/use-language'
 
 export default function LoginPage() {
@@ -15,7 +16,10 @@ export default function LoginPage() {
           <Image width={20} height={20} src="/logo.svg" alt="Logo" draggable={false} />
           <span>{t('common.appName')}</span>
         </div>
-        <AppSettingsMenu />
+        <div className="flex items-center gap-2">
+          <RepoDevLinks />
+          <AppSettingsMenu />
+        </div>
       </header>
 
       <main className="flex flex-1 flex-col items-center justify-center px-4 py-10">

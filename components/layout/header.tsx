@@ -1,10 +1,9 @@
 'use client'
-import Image from 'next/image'
 import Link from 'next/link'
-import { FileText } from 'lucide-react'
 import { Separator } from '@/components/ui/separator'
 import { SidebarTrigger } from '@/components/ui/sidebar'
 import { AppSettingsMenu } from '@/components/layout/app-settings-menu'
+import { RepoDevLinks } from '@/components/layout/repo-dev-links'
 import { useLanguage } from '@/hooks/use-language'
 import { useAuth } from '@/hooks/use-auth'
 import { Button } from '@/components/ui/button'
@@ -33,7 +32,8 @@ export function Header() {
         {/* <Image width={30} height={30} src="/logo.svg" alt="Logo" draggable={false} /> */}
         <span className='text-bold'>{t('common.appName')}</span>
       </Link>
-      <div className="ms-auto flex items-center gap-2">
+      <div className="ms-auto flex items-center gap-1 sm:gap-2">
+        <RepoDevLinks />
         <AppSettingsMenu />
         {user ? (
           <DropdownMenu dir={direction}>

@@ -51,7 +51,9 @@
   "layout": {
     "mainNavigation": "Navigation",
     "toggleSidebar": "Toggle sidebar",
-    "comingSoon": "Soon"
+    "comingSoon": "Soon",
+    "githubRepo": "RimInvoice source code on GitHub",
+    "devByPortfolio": "Dev by iyehah"
   },
   "auth": {
     "login": "Log in",

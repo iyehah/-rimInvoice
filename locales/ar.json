@@ -51,7 +51,9 @@
   "layout": {
     "mainNavigation": "التنقل",
     "toggleSidebar": "إظهار أو إخفاء القائمة",
-    "comingSoon": "قريبًا"
+    "comingSoon": "قريبًا",
+    "githubRepo": "الشيفرة المصدرية لريم إنفويس على GitHub",
+    "devByPortfolio": "تطوير: iyehah"
   },
   "auth": {
     "login": "تسجيل الدخول",

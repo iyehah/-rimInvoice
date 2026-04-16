@@ -1,7 +1,17 @@
 {
   "name": "riminvoice",
   "version": "0.1.0",
-  "private": true,
+  "description": "Invoice management for Mauritania — Next.js, Firebase, local-first drafts",
+  "author": "iyehah (https://github.com/iyehah)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/iyehah/rimInvoice.git"
+  },
+  "homepage": "https://riminvoice.vercel.app",
+  "bugs": {
+    "url": "https://github.com/iyehah/rimInvoice/issues"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -56,6 +66,7 @@
     "react-day-picker": "9.13.2",
     "react-dom": "19.2.4",
     "react-hook-form": "^7.54.1",
+    "react-icons": "^5.6.0",
     "react-resizable-panels": "^2.1.7",
     "recharts": "2.15.0",
     "sonner": "^1.7.1",

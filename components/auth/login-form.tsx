@@ -49,7 +49,6 @@ export function LoginForm() {
             {t('layout.comingSoon')}
           </Badge>
         </Button>
-
       </CardContent>
     </Card>
   )
