@@ -1,0 +1,17 @@
+{
+  "languages": [
+    { "code": "ar", "name": "العربية", "dir": "rtl", "isDefault": true },
+    { "code": "fr", "name": "Français", "dir": "ltr", "isDefault": false },
+    { "code": "en", "name": "English", "dir": "ltr", "isDefault": false },
+    { "code": "es", "name": "Español", "dir": "ltr", "isDefault": false },
+    { "code": "pt", "name": "Português", "dir": "ltr", "isDefault": false },
+    { "code": "de", "name": "Deutsch", "dir": "ltr", "isDefault": false }
+  ],
+  "dialectsComingSoon": [
+    { "code": "mey", "name": "Hassānīya" },
+    { "code": "ff", "name": "Pulaar" },
+    { "code": "snk", "name": "Soninke" },
+    { "code": "wo", "name": "Wolof" }
+  ],
+  "defaultLanguage": "ar"
+}

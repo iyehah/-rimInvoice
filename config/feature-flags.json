@@ -1,0 +1,48 @@
+{
+  "featureFlags": [
+    {
+      "id": "saveInvoices",
+      "name": "Save Invoices",
+      "description": "Allow users to save invoices to their account",
+      "enabled": true,
+      "requiresPremium": true
+    },
+    {
+      "id": "invoiceHistory",
+      "name": "Invoice History",
+      "description": "View and manage past invoices",
+      "enabled": true,
+      "requiresPremium": true
+    },
+    {
+      "id": "profitTracking",
+      "name": "Profit Tracking",
+      "description": "Track profit margins on invoices",
+      "enabled": false,
+      "requiresPremium": true
+    },
+    {
+      "id": "multipleBusinesses",
+      "name": "Multiple Businesses",
+      "description": "Manage multiple business profiles",
+      "enabled": false,
+      "requiresPremium": true
+    },
+    {
+      "id": "customBranding",
+      "name": "Custom Branding",
+      "description": "Add custom colors and branding to invoices",
+      "enabled": false,
+      "requiresPremium": true
+    },
+    {
+      "id": "emailInvoices",
+      "name": "Email Invoices",
+      "description": "Send invoices directly via email",
+      "enabled": false,
+      "requiresPremium": true
+    }
+  ],
+  "maintenanceMode": false,
+  "allowNewRegistrations": true
+}
