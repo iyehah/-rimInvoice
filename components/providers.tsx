@@ -4,6 +4,7 @@ import { type ReactNode } from 'react'
 import { AuthProvider } from '@/hooks/use-auth'
 import { LanguageProvider } from '@/hooks/use-language'
 import { ThemeProvider } from 'next-themes'
+import { Toaster } from '@/components/ui/toaster'
 
 interface ProvidersProps {
   children: ReactNode
@@ -20,6 +21,7 @@ export function Providers({ children }: ProvidersProps) {
       <LanguageProvider>
         <AuthProvider>
           {children}
+          <Toaster />
         </AuthProvider>
       </LanguageProvider>
     </ThemeProvider>

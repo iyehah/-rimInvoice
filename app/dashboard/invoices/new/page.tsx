@@ -10,6 +10,7 @@ import { InvoiceForm } from '@/components/invoice/invoice-form'
 import { useInvoiceActions } from '@/hooks/use-invoice'
 import { useAuth } from '@/hooks/use-auth'
 import { useLanguage } from '@/hooks/use-language'
+import { toast } from '@/hooks/use-toast'
 import { useBusinessProfiles } from '@/hooks/use-business-profiles'
 import { generateInvoiceNumber, calculateInvoiceTotals } from '@/lib/invoice-utils'
 import type { InvoiceFormData, Invoice, InvoiceItem } from '@/types/invoice'
@@ -47,7 +48,12 @@ export default function NewInvoicePage() {
   const handleSubmit = async (data: InvoiceFormData) => {
     if (!selectedBusiness) return
     const invoiceId = await createInvoice(data, selectedBusiness)
-    if (invoiceId) router.push(`/dashboard/invoices/${invoiceId}`)
+    if (invoiceId) {
+      toast({ title: t('toast.invoiceCreated') })
+      router.push(`/dashboard/invoices/${invoiceId}`)
+    } else {
+      toast({ variant: 'destructive', title: t('toast.invoiceCreateFailed') })
+    }
   }
 
   const handlePreview = (data: InvoiceFormData) => {

@@ -35,6 +35,7 @@ import {
 import { useAuth } from '@/hooks/use-auth'
 import { useBusinessProfiles } from '@/hooks/use-business-profiles'
 import { useLanguage } from '@/hooks/use-language'
+import { toast } from '@/hooks/use-toast'
 import type { BusinessProfile } from '@/types/user'
 import type { BusinessProfileStored } from '@/lib/local-business-profiles'
 
@@ -133,9 +134,19 @@ export default function ProfilePage() {
     setError(null)
     try {
       if (mode === 'create') {
-        addProfile(formData)
+        const row = addProfile(formData)
+        if (!row) {
+          toast({ variant: 'destructive', title: t('toast.profileSaveFailed') })
+          return
+        }
+        toast({ title: t('toast.profileCreated') })
       } else if (mode === 'edit' && editId) {
-        updateProfile(editId, formData)
+        const ok = updateProfile(editId, formData)
+        if (!ok) {
+          toast({ variant: 'destructive', title: t('toast.profileSaveFailed') })
+          return
+        }
+        toast({ title: t('toast.profileUpdated') })
       }
       refresh()
       cancelForm()
@@ -147,8 +158,13 @@ export default function ProfilePage() {
   }
 
   const handleDelete = (id: string) => {
-    removeProfile(id)
-    refresh()
+    const ok = removeProfile(id)
+    if (ok) {
+      toast({ title: t('toast.profileDeleted') })
+      refresh()
+    } else {
+      toast({ variant: 'destructive', title: t('toast.profileDeleteFailed') })
+    }
   }
 
   return (
@@ -223,7 +239,15 @@ export default function ProfilePage() {
                 </div>
                 <div className="flex flex-wrap gap-2">
                   {defaultProfileId !== p.id ? (
-                    <Button type="button" variant="outline" size="sm" onClick={() => setDefaultProfile(p.id)}>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={() => {
+                        if (setDefaultProfile(p.id)) toast({ title: t('toast.profileDefaultSet') })
+                        else toast({ variant: 'destructive', title: t('toast.profileDefaultFailed') })
+                      }}
+                    >
                       {t('profile.setDefault')}
                     </Button>
                   ) : null}
